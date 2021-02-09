@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function makeMultiDigitNumbers(string){
+            console.log("im in the function");
+            let finalString = "";
+            arrayIter = 0;
+            finalArray = [];
+            for(k = 0; k < string.length; k++){//loop through the string of the function
+                let newNum = "";
+                if(!isNaN(string.charAt(k)) && k != string.length-1){//if its a number and we aren't on the last item
+                    newNum += "" + string.charAt(k);
+                    j = k + 1;
+                    while(!isNaN(string.charAt(j))){//Check all characters after until we hit a non number
+                        newNum += "" + string.charAt(j);//add the digit to the new number
+                        j++;
+                    }
+                    k = j - 1;
+                   finalArray[arrayIter] = newNum;//add the multi digit number to the array
+                   arrayIter++;
+                }else{
+                    finalArray[arrayIter] = string.charAt(k);//add single digit numbers and symbols to the array
+                    arrayIter++;
+                }
+                
+            }
+            return finalArray;
+        }
+
+        var inputArray = prompt("Enter your numbers").split(";");
+        for(i = 0; i < inputArray.length - 1; i+=1){//Use length -1 to avoid an undefined at the end/infinte loop in method
+            let inputString = inputArray[i];
+            let newString = inputString.replace(/\s+/g, "");
+            let newArray = makeMultiDigitNumbers(newString);
+            let delIndex = [];
+            let delIter = 0;
+            let finalString = "";
+            for(j = 0; j < newArray.length; j++){
+                if(newArray[j] == "^"){
+                    newArray[j-1] = parseInt(newArray[j-1]) * parseInt(newArray[j-1]);
+                    newArray.splice(j,1);
+                }
+                finalString = newArray.toString();
+                finalString = finalString.replace(/,/g,"");
+            }
+            document.write("The sum of line " + i + " is: " + eval(finalString));
+            document.write("<br>");
+        }
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
